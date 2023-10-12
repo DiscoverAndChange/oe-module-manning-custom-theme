@@ -1,0 +1,53 @@
+:root {
+    --white: #fff;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --font-family-sans-serif: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --primary: #38619b;
+    --secondary: #467ac2;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+}
+
+html #login_form .box
+,html #login_form .vertical-band
+,html #login_form .band {
+    background-color: var(--primary) !important;
+    color: var(--white)
+}
+
+html #mainBox .navbar-light {
+    background-color: var(--primary) !important;
+}
+
+html .navbar-light .appMenu > div > .menuLabel:hover {
+    background-color: var(--light) !important;
+    color: var(--dark) !important;
+}
+
+html .appMenu > div > .menuLabel
+,html .appMenu > div > .menuSection > .menuLabel {
+    color: var(--light);
+}
+html .appMenu > div > .menuSection:hover > .menuLabel {
+    background-color: var(--light) !important;
+    color: var(--dark) !important;
+}
+
+html #logout_icon, html #menu_icon, html #user_icon {
+    color: var(--light) !important;
+}
+html .oauth2-bg-container {
+    background-color: var(--primary);
+    color: var(--light);
+}
+html .oauth2-bg-container .nav-item {
+    color: var(--dark);
+    background-color: var(--light);
+}
+html .oauth2-bg-container .card {
+    color: var(--dark);
+}
