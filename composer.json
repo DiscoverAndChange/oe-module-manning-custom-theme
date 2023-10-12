@@ -1,8 +1,8 @@
 {
-  "name": "adunsulag/oe-module-manning-custom-theme",
+  "name": "discoverandchange/oe-module-manning-custom-theme",
   "description": "OpenEMR Theme Module for custom color selection inside OpenEMR and for SMART APPs",
   "type": "openemr-module",
-  "license": "GPL-3.0",
+  "license": "GPL-3.0-only",
   "authors": [
     {
       "name": "Stephen Nielson",
