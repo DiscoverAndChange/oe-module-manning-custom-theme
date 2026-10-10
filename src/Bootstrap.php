@@ -6,24 +6,15 @@ namespace DiscoverAndChange\Modules\CustomManningTheme;
  * Note the below use statements are importing classes from the OpenEMR core codebase
  */
 
+use DiscoverAndChange\Modules\CustomManningTheme\Controllers\LogoController;
 use OpenEMR\Common\Logging\SystemLogger;
-use OpenEMR\Common\Twig\TwigContainer;
 use OpenEMR\Core\Kernel;
 use OpenEMR\Events\Core\StyleFilterEvent;
 use OpenEMR\Events\Core\TemplatePageEvent;
 use OpenEMR\Events\Core\TwigEnvironmentEvent;
-use OpenEMR\Events\Globals\GlobalsInitializedEvent;
-use OpenEMR\Events\Main\Tabs\RenderEvent;
-use OpenEMR\Events\RestApiExtend\RestApiResourceServiceEvent;
-use OpenEMR\Events\RestApiExtend\RestApiScopeEvent;
-use OpenEMR\Services\Globals\GlobalSetting;
-use OpenEMR\Menu\MenuEvent;
-use OpenEMR\Events\RestApiExtend\RestApiCreateEvent;
+use OpenEMR\Events\Services\LogoFilterEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;
-// we import our own classes here.. although this use statement is unnecessary it forces the autoloader to be tested.
-use OpenEMR\Modules\CustomModuleSkeleton\TaskRestController;
 
 class Bootstrap
 {
@@ -79,6 +70,18 @@ class Bootstrap
     {
         $this->eventDispatcher->addListener(StyleFilterEvent::EVENT_NAME, [$this, 'addStylesheet']);
         $this->eventDispatcher->addListener(TemplatePageEvent::class, [$this, 'oauth2TemplatePageOverrides']);
+        $this->eventDispatcher->addListener(LogoFilterEvent::EVENT_NAME, [$this, 'overrideLogoWithBundled']);
+    }
+
+    /**
+     * Serve this module's bundled logos in place of OpenEMR's default logos for any logo type the
+     * module bundles an image for (see LogoController). Drop a logo into
+     * public/assets/images/logos/<logoType>/ (e.g. core/login/primary/) and it is used automatically.
+     */
+    public function overrideLogoWithBundled(LogoFilterEvent $event): LogoFilterEvent
+    {
+        $controller = new LogoController($this->getLogosFilePath(), $this->getLogosWebPath());
+        return $controller->respondToLogoFilterEvent($event);
     }
 
     public function addTemplateOverrideLoader(TwigEnvironmentEvent $event)
@@ -130,5 +133,25 @@ class Bootstrap
     private function getAssetPath()
     {
         return $this->getPublicPath() . '/assets/';
+    }
+
+    /**
+     * Web (browser) URL prefix for the bundled logos, including the OpenEMR web root so the <img src>
+     * is correct even when OpenEMR is installed under a sub-path.
+     */
+    private function getLogosWebPath(): string
+    {
+        $webRoot = $GLOBALS['web_root'] ?? '';
+        return $webRoot . self::MODULE_INSTALLATION_PATH . ($this->moduleDirectoryName ?? '')
+            . '/public/assets/images/logos/';
+    }
+
+    /**
+     * Absolute filesystem path to the bundled logos directory (used to detect which logos we ship).
+     */
+    private function getLogosFilePath(): string
+    {
+        return \dirname(__DIR__) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'assets'
+            . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'logos' . DIRECTORY_SEPARATOR;
     }
 }
