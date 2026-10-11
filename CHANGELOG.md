@@ -1,13 +1,17 @@
-# 1.0.2 Enforce site-customization globals via table.sql
+# 1.0.3 Enforce site-customization globals via table.sql
 
 Adds a table.sql (run by OpenEMR's SQLUpgradeService on install/upgrade) that sets the core globals
 this theme requires:
 
-  - login_page_layout   = 'login/layouts/vertical_box.html.twig'
-  - primary_logo_width   = 'w-100'
-  - openemr_name         = 'Dr. Jill Manning Assessments'
-  - online_support_link  = 'https://drjillmanning.com/'
-  - support_phone_number = '720.209.9510'
+  - login_page_layout        = 'login/layouts/vertical_box.html.twig'
+  - primary_logo_width        = 'w-100'
+  - openemr_name              = 'Dr. Jill Manning Assessments'
+  - online_support_link       = 'https://drjillmanning.com/'
+  - support_phone_number      = '720.209.9510'
+  - display_acknowledgements  = '0'
+  - css_header                = 'style_cobalt_blue.css'
+  - enforce_signin_email      = '0'
+  - password_expiration_days  = '365'
 
 Each is guarded with #IfNotRow2D on the exact gl_value (so it is applied only when not already set
 to the required value) and written with REPLACE INTO globals (gl_index 0), since several of these

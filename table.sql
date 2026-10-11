@@ -49,3 +49,31 @@ START TRANSACTION;
 REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('support_phone_number', 0, '720.209.9510');
 COMMIT;
 #EndIf
+
+-- Do not show the acknowledgements block on the login page.
+#IfNotRow2D globals gl_name display_acknowledgements gl_value 0
+START TRANSACTION;
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('display_acknowledgements', 0, '0');
+COMMIT;
+#EndIf
+
+-- Default color theme: cobalt blue.
+#IfNotRow2D globals gl_name css_header gl_value style_cobalt_blue.css
+START TRANSACTION;
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('css_header', 0, 'style_cobalt_blue.css');
+COMMIT;
+#EndIf
+
+-- Do not require the user's email at sign-in.
+#IfNotRow2D globals gl_name enforce_signin_email gl_value 0
+START TRANSACTION;
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('enforce_signin_email', 0, '0');
+COMMIT;
+#EndIf
+
+-- Password expiration: 365 days.
+#IfNotRow2D globals gl_name password_expiration_days gl_value 365
+START TRANSACTION;
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('password_expiration_days', 0, '365');
+COMMIT;
+#EndIf
