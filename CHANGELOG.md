@@ -12,7 +12,10 @@ core logo-type slug, e.g. `core/login/primary`, `core/menu/primary`, `core/login
 through to OpenEMR's default. Files are served from `public/` so they pass core's
 `ModulesApplication::filterSafeLocalModuleFiles()` safety check.
 
-Ships bundled logos for `core/login/primary` (login page) and `core/menu/primary` (EMR top menu).
+Ships bundled logos for `core/login/primary` (provider login page), `core/menu/primary` (EMR top
+menu) and `portal/login/primary` (patient portal login). The portal logo is currently the same image
+as the provider login logo; replace `public/assets/images/logos/portal/login/primary/logo.*` to give
+the portal its own.
 
 Also removes dead skeleton leftovers from Bootstrap (an unused `CustomModuleSkeleton` import and
 unused imports).
