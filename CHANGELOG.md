@@ -1,4 +1,4 @@
-# 1.0.3 Enforce site-customization globals via table.sql
+# 1.0.4 Enforce site-customization globals via table.sql
 
 Adds a table.sql (run by OpenEMR's SQLUpgradeService on install/upgrade) that sets the core globals
 this theme requires:
